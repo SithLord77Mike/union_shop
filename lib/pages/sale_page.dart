@@ -23,7 +23,7 @@ class SalePage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     color: const Color(0xFF4d2963),
                     child: const Text(
-                      'PLACEHOLDER HEADER TEXT - STUDENTS TO UPDATE!',
+                      'UNION SHOP – OFFICIAL UPSU MERCHANDISE',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
@@ -112,7 +112,7 @@ class SalePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Placeholder Footer',
+                    'Union Shop Footer',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 16,
@@ -121,7 +121,7 @@ class SalePage extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Students should customise this footer section',
+                    'Official University of Portsmouth Students’ Union shop.',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 14,
