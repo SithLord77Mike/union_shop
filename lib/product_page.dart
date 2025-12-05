@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ProductPage extends StatelessWidget {
   const ProductPage({super.key});
 
-  void navigateToHome(BuildContext context) {
+  void _navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
 
@@ -13,18 +13,18 @@ class ProductPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // =============== HEADER ===============
+            // ================= HEADER =================
             Container(
               color: Colors.white,
               child: Column(
                 children: [
-                  // Top banner
+                  // Top purple banner
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     color: const Color(0xFF4d2963),
                     child: const Text(
-                      'PLACEHOLDER HEADER TEXT - STUDENTS TO UPDATE!',
+                      'UNION SHOP – OFFICIAL UPSU MERCHANDISE',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
@@ -39,7 +39,7 @@ class ProductPage extends StatelessWidget {
                     child: Row(
                       children: [
                         GestureDetector(
-                          onTap: () => navigateToHome(context),
+                          onTap: () => _navigateToHome(context),
                           child: const Text(
                             'The UNION',
                             style: TextStyle(
@@ -53,36 +53,47 @@ class ProductPage extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
-                              icon: const Icon(
-                                Icons.search,
-                                size: 18,
-                                color: Colors.grey,
-                              ),
-                              onPressed: () {},
+                              icon: const Icon(Icons.search,
+                                  size: 18, color: Colors.grey),
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        'Search coming soon (coursework demo).'),
+                                  ),
+                                );
+                              },
                             ),
                             IconButton(
-                              icon: const Icon(
-                                Icons.person_outline,
-                                size: 18,
-                                color: Colors.grey,
-                              ),
-                              onPressed: () {},
+                              icon: const Icon(Icons.person_outline,
+                                  size: 18, color: Colors.grey),
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/login');
+                              },
                             ),
                             IconButton(
-                              icon: const Icon(
-                                Icons.shopping_bag_outlined,
-                                size: 18,
-                                color: Colors.grey,
-                              ),
-                              onPressed: () {},
+                              icon: const Icon(Icons.shopping_bag_outlined,
+                                  size: 18, color: Colors.grey),
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        'Cart coming soon – demo button for coursework.'),
+                                  ),
+                                );
+                              },
                             ),
                             IconButton(
-                              icon: const Icon(
-                                Icons.menu,
-                                size: 18,
-                                color: Colors.grey,
-                              ),
-                              onPressed: () {},
+                              icon: const Icon(Icons.menu,
+                                  size: 18, color: Colors.grey),
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        'Mobile menu coming soon (coursework demo).'),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -93,75 +104,195 @@ class ProductPage extends StatelessWidget {
               ),
             ),
 
-            // =============== PRODUCT BODY ===============
+            // ================= HERO IMAGE =================
+            const SizedBox(height: 16),
             Padding(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Container(
+                height: 220,
+                width: double.infinity,
+                color: Colors.grey[300],
+                child: const Center(
+                  child: Icon(
+                    Icons.image,
+                    color: Colors.grey,
+                    size: 48,
+                  ),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 24),
+
+            // ================= PRODUCT DETAILS =================
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  // Image placeholder
-                  SizedBox(
-                    height: 220,
-                    width: double.infinity,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFE0E0E0),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.image,
-                          size: 64,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 24),
-
-                  Text(
+                children: [
+                  const Text(
                     'Placeholder Product Name',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(height: 12),
-
-                  Text(
-                    '£15.00',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF4d2963),
                     ),
                   ),
-                  SizedBox(height: 24),
-
-                  Text(
-                    'Description',
+                  const SizedBox(height: 8),
+                  const Text(
+                    '£15.00',
                     style: TextStyle(
                       fontSize: 18,
+                      color: Color(0xFF4d2963),
                       fontWeight: FontWeight.w600,
-                      color: Colors.black,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 24),
 
-                  Text(
-                    'Students should add size options, colour options, quantity selector, '
-                    'add to cart button, and buy now button here.',
+                  // Options row (dummy dropdowns / counters – non functional)
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DropdownButtonFormField<String>(
+                          value: 'Select size',
+                          items: const [
+                            DropdownMenuItem(
+                              value: 'Select size',
+                              child: Text('Select size'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'S',
+                              child: Text('Small'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'M',
+                              child: Text('Medium'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'L',
+                              child: Text('Large'),
+                            ),
+                          ],
+                          onChanged: (_) {},
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Size',
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: DropdownButtonFormField<String>(
+                          value: 'Select colour',
+                          items: const [
+                            DropdownMenuItem(
+                              value: 'Select colour',
+                              child: Text('Select colour'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Black',
+                              child: Text('Black'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Purple',
+                              child: Text('Purple'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'White',
+                              child: Text('White'),
+                            ),
+                          ],
+                          onChanged: (_) {},
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Colour',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 110,
+                        child: TextFormField(
+                          initialValue: '1',
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Quantity',
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'Add to cart coming soon – coursework demo only.'),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF4d2963),
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                          ),
+                          child: const Text('ADD TO CART'),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                                'Buy now coming soon – coursework demo only.'),
+                          ),
+                        );
+                      },
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
+                      child: const Text('BUY IT NOW'),
+                    ),
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  const Text(
+                    'Description',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.grey,
-                      height: 1.5,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Students should add size options, colour options, '
+                    'quantity selector, add to cart button, and buy now button here.',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black87,
                     ),
                   ),
                 ],
               ),
             ),
 
-            // =============== FOOTER ===============
+            const SizedBox(height: 32),
+
+            // ================= FOOTER =================
             Container(
               width: double.infinity,
               color: Colors.grey[50],
@@ -170,7 +301,7 @@ class ProductPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Placeholder Footer',
+                    'Union Shop Footer',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 16,
@@ -179,11 +310,12 @@ class ProductPage extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Students should customise this footer section',
+                    'Official University of Portsmouth Students’ Union shop.',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 14,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),

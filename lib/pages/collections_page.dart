@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 class CollectionsPage extends StatelessWidget {
   const CollectionsPage({super.key});
 
-  void navigateToHome(BuildContext context) {
+  void _navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
 
-  void navigateToCollection(BuildContext context) {
-    Navigator.pushNamed(context, '/collection');
-  }
-
-  void navigateToSale(BuildContext context) {
-    Navigator.pushNamed(context, '/sale');
+  void _navigateToCollection(BuildContext context, String title) {
+    Navigator.pushNamed(
+      context,
+      '/collection',
+      arguments: title, // just pass a String
+    );
   }
 
   @override
@@ -21,17 +21,18 @@ class CollectionsPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // HEADER (same style as other pages)
+            // ===== HEADER =====
             Container(
               color: Colors.white,
               child: Column(
                 children: [
+                  // top banner
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     color: const Color(0xFF4d2963),
                     child: const Text(
-                      'PLACEHOLDER HEADER TEXT - STUDENTS TO UPDATE!',
+                      'UNION SHOP – OFFICIAL UPSU MERCHANDISE',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
@@ -39,13 +40,14 @@ class CollectionsPage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // main header row
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 12),
                     child: Row(
                       children: [
                         GestureDetector(
-                          onTap: () => navigateToHome(context),
+                          onTap: () => _navigateToHome(context),
                           child: const Text(
                             'The UNION',
                             style: TextStyle(
@@ -57,16 +59,50 @@ class CollectionsPage extends StatelessWidget {
                         const Spacer(),
                         Row(
                           mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            Icon(Icons.search, size: 18, color: Colors.grey),
-                            SizedBox(width: 8),
-                            Icon(Icons.person_outline,
-                                size: 18, color: Colors.grey),
-                            SizedBox(width: 8),
-                            Icon(Icons.shopping_bag_outlined,
-                                size: 18, color: Colors.grey),
-                            SizedBox(width: 8),
-                            Icon(Icons.menu, size: 18, color: Colors.grey),
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.search,
+                                  size: 18, color: Colors.grey),
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        'Search coming soon (coursework demo).'),
+                                  ),
+                                );
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.person_outline,
+                                  size: 18, color: Colors.grey),
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/login');
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.shopping_bag_outlined,
+                                  size: 18, color: Colors.grey),
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        'Cart coming soon – demo button for coursework.'),
+                                  ),
+                                );
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.menu,
+                                  size: 18, color: Colors.grey),
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        'Mobile menu coming soon (coursework demo).'),
+                                  ),
+                                );
+                              },
+                            ),
                           ],
                         ),
                       ],
@@ -95,25 +131,37 @@ class CollectionsPage extends StatelessWidget {
                   CollectionTile(
                     title: 'Portsmouth Merchandise',
                     description: 'Hoodies, T-shirts and accessories',
-                    onTap: () => navigateToCollection(context),
+                    onTap: () => _navigateToCollection(
+                      context,
+                      'Portsmouth Merchandise Collection',
+                    ),
                   ),
                   const SizedBox(height: 12),
                   CollectionTile(
                     title: 'Gifts & Souvenirs',
                     description: 'Mugs, magnets and small gifts',
-                    onTap: () => navigateToCollection(context),
+                    onTap: () => _navigateToCollection(
+                      context,
+                      'Gifts & Souvenirs Collection',
+                    ),
                   ),
                   const SizedBox(height: 12),
                   CollectionTile(
                     title: 'The Print Shack',
                     description: 'Custom printing and personalisation',
-                    onTap: () => navigateToCollection(context),
+                    onTap: () => _navigateToCollection(
+                      context,
+                      'The Print Shack Collection',
+                    ),
                   ),
                   const SizedBox(height: 12),
                   CollectionTile(
                     title: 'Sale',
                     description: 'Discounted Union Shop products',
-                    onTap: () => navigateToSale(context),
+                    onTap: () => _navigateToCollection(
+                      context,
+                      'Sale Collection',
+                    ),
                   ),
                 ],
               ),
@@ -121,7 +169,7 @@ class CollectionsPage extends StatelessWidget {
 
             const SizedBox(height: 32),
 
-            // FOOTER
+            // ===== FOOTER =====
             Container(
               width: double.infinity,
               color: Colors.grey[50],
@@ -130,7 +178,7 @@ class CollectionsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Placeholder Footer',
+                    'Union Shop Footer',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 16,
@@ -139,11 +187,12 @@ class CollectionsPage extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Students should customise this footer section',
+                    'Official University of Portsmouth Students’ Union shop.',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 14,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),

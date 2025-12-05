@@ -19,6 +19,7 @@ class UnionShopApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
+        useMaterial3: true,
       ),
       home: const HomeScreen(),
       routes: {
@@ -37,15 +38,15 @@ class UnionShopApp extends StatelessWidget {
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  void navigateToHome(BuildContext context) {
+  void _navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
 
-  void navigateToProduct(BuildContext context) {
+  void _navigateToProduct(BuildContext context) {
     Navigator.pushNamed(context, '/product');
   }
 
-  void navigateToCollections(BuildContext context) {
+  void _navigateToCollections(BuildContext context) {
     Navigator.pushNamed(context, '/collections');
   }
 
@@ -60,13 +61,13 @@ class HomeScreen extends StatelessWidget {
               color: Colors.white,
               child: Column(
                 children: [
-                  // Top banner
+                  // Top purple banner
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     color: const Color(0xFF4d2963),
                     child: const Text(
-                      'PLACEHOLDER HEADER TEXT - STUDENTS TO UPDATE!',
+                      'UNION SHOP – OFFICIAL UPSU MERCHANDISE',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
@@ -81,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                     child: Row(
                       children: [
                         GestureDetector(
-                          onTap: () => navigateToHome(context),
+                          onTap: () => _navigateToHome(context),
                           child: const Text(
                             'The UNION',
                             style: TextStyle(
@@ -98,6 +99,7 @@ class HomeScreen extends StatelessWidget {
                           child: const Text('About'),
                         ),
                         const Spacer(),
+                        // Top-right icons
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -107,7 +109,10 @@ class HomeScreen extends StatelessWidget {
                                 size: 18,
                                 color: Colors.grey,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                // Simple behaviour: go to collections as a “browse” action
+                                Navigator.pushNamed(context, '/collections');
+                              },
                             ),
                             IconButton(
                               icon: const Icon(
@@ -125,7 +130,15 @@ class HomeScreen extends StatelessWidget {
                                 size: 18,
                                 color: Colors.grey,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Cart coming soon – demo button for coursework.',
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                             IconButton(
                               icon: const Icon(
@@ -133,7 +146,61 @@ class HomeScreen extends StatelessWidget {
                                 size: 18,
                                 color: Colors.grey,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return SafeArea(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          ListTile(
+                                            title: const Text('Home'),
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              Navigator.pushNamedAndRemoveUntil(
+                                                context,
+                                                '/',
+                                                (route) => false,
+                                              );
+                                            },
+                                          ),
+                                          ListTile(
+                                            title: const Text('Collections'),
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              Navigator.pushNamed(
+                                                  context, '/collections');
+                                            },
+                                          ),
+                                          ListTile(
+                                            title: const Text('Sale'),
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              Navigator.pushNamed(
+                                                context,
+                                                '/collection',
+                                                arguments: {
+                                                  'slug': 'sale',
+                                                  'title': 'Sale Collection',
+                                                },
+                                              );
+                                            },
+                                          ),
+                                          ListTile(
+                                            title: const Text('About'),
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              Navigator.pushNamed(
+                                                  context, '/about');
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -148,33 +215,49 @@ class HomeScreen extends StatelessWidget {
             Container(
               height: 260,
               width: double.infinity,
-              color: Colors.grey[700],
+              decoration: const BoxDecoration(
+                color: Colors.black54,
+                image: DecorationImage(
+                  image: AssetImage('assets/images/hero_camera.png'),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Colors.black38,
+                    BlendMode.darken,
+                  ),
+                ),
+              ),
               child: Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text(
-                      'Placeholder Hero Title',
+                      'Welcome to The Union Shop',
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 12),
                     const Text(
-                      'This is placeholder text for the hero section.',
+                      'Official University of Portsmouth merchandise',
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 24),
                     ElevatedButton(
-                      onPressed: () => navigateToProduct(context),
+                      onPressed: () => _navigateToCollections(context),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF4d2963),
                         foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 12,
+                        ),
                       ),
                       child: const Text('BROWSE PRODUCTS'),
                     ),
@@ -187,7 +270,7 @@ class HomeScreen extends StatelessWidget {
 
             // ================= PRODUCTS SECTION =================
             const Text(
-              'PLACEHOLDER PRODUCTS SECTION',
+              'Featured Products',
               style: TextStyle(
                 fontSize: 20,
                 letterSpacing: 1,
@@ -207,20 +290,20 @@ class HomeScreen extends StatelessWidget {
                 childAspectRatio: 3 / 2,
                 children: const [
                   ProductCard(
-                    title: 'Placeholder Product 1',
+                    title: 'Portsmouth Hoodie',
+                    price: '£30.00',
+                  ),
+                  ProductCard(
+                    title: 'Portsmouth Tote Bag',
+                    price: '£12.00',
+                  ),
+                  ProductCard(
+                    title: 'Union Water Bottle',
                     price: '£10.00',
                   ),
                   ProductCard(
-                    title: 'Placeholder Product 2',
-                    price: '£15.00',
-                  ),
-                  ProductCard(
-                    title: 'Placeholder Product 3',
+                    title: 'Graduation Frame',
                     price: '£20.00',
-                  ),
-                  ProductCard(
-                    title: 'Placeholder Product 4',
-                    price: '£25.00',
                   ),
                 ],
               ),
@@ -229,7 +312,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 16),
 
             TextButton(
-              onPressed: () => navigateToCollections(context),
+              onPressed: () => _navigateToCollections(context),
               child: const Text('VIEW ALL PRODUCTS'),
             ),
 
@@ -244,7 +327,7 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Placeholder Footer',
+                    'Union Shop Footer',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 16,
@@ -253,11 +336,12 @@ class HomeScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Students should customise this footer section',
+                    'Official University of Portsmouth Students’ Union shop.',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 14,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),

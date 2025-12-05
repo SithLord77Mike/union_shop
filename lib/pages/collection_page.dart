@@ -3,17 +3,33 @@ import 'package:flutter/material.dart';
 class CollectionPage extends StatelessWidget {
   const CollectionPage({super.key});
 
-  void navigateToHome(BuildContext context) {
+  void _navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+  }
+
+  String _resolveTitle(Object? args) {
+    // We only pass a String, but this also handles Map just in case
+    if (args is String && args.isNotEmpty) {
+      return args;
+    }
+    if (args is Map<String, dynamic>) {
+      final explicit = args['title'] as String?;
+      if (explicit != null && explicit.isNotEmpty) return explicit;
+    }
+    // fallback
+    return 'Collection';
   }
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments;
+    final collectionTitle = _resolveTitle(args);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // HEADER
+            // ===== HEADER =====
             Container(
               color: Colors.white,
               child: Column(
@@ -23,7 +39,7 @@ class CollectionPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     color: const Color(0xFF4d2963),
                     child: const Text(
-                      'PLACEHOLDER HEADER TEXT - STUDENTS TO UPDATE!',
+                      'UNION SHOP – OFFICIAL UPSU MERCHANDISE',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
@@ -37,7 +53,7 @@ class CollectionPage extends StatelessWidget {
                     child: Row(
                       children: [
                         GestureDetector(
-                          onTap: () => navigateToHome(context),
+                          onTap: () => _navigateToHome(context),
                           child: const Text(
                             'The UNION',
                             style: TextStyle(
@@ -55,9 +71,9 @@ class CollectionPage extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            const Text(
-              'Portsmouth Merchandise Collection',
-              style: TextStyle(
+            Text(
+              collectionTitle,
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
@@ -65,7 +81,7 @@ class CollectionPage extends StatelessWidget {
 
             const SizedBox(height: 8),
 
-            // Sort/filter controls (dummy, not functional yet)
+            // Sort/filter controls (dummy, but visible)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
@@ -88,13 +104,17 @@ class CollectionPage extends StatelessWidget {
                         child: Text('Price: High to Low'),
                       ),
                     ],
-                    onChanged: (_) {},
+                    onChanged: (_) {
+                      // dummy for coursework – no-op
+                    },
                   ),
                   const Spacer(),
                   FilterChip(
                     label: const Text('In stock'),
                     selected: true,
-                    onSelected: (_) {},
+                    onSelected: (_) {
+                      // dummy for coursework – no-op
+                    },
                   ),
                 ],
               ),
@@ -102,6 +122,7 @@ class CollectionPage extends StatelessWidget {
 
             const SizedBox(height: 16),
 
+            // Dummy product grid (hard-coded is fine for coursework)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: GridView.count(
@@ -134,7 +155,7 @@ class CollectionPage extends StatelessWidget {
 
             const SizedBox(height: 32),
 
-            // FOOTER
+            // ===== FOOTER =====
             Container(
               width: double.infinity,
               color: Colors.grey[50],
@@ -143,7 +164,7 @@ class CollectionPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Placeholder Footer',
+                    'Union Shop Footer',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 16,
@@ -152,11 +173,12 @@ class CollectionPage extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Students should customise this footer section',
+                    'Official University of Portsmouth Students’ Union shop.',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 14,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
@@ -179,36 +201,42 @@ class _CollectionProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
-      ),
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Container(
-              color: Colors.grey[300],
-              child: const Center(
-                child: Icon(Icons.image, color: Colors.grey),
+    return InkWell(
+      onTap: () {
+        // For now, always go to the placeholder product page
+        Navigator.pushNamed(context, '/product');
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey.shade300),
+        ),
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Container(
+                color: Colors.grey[300],
+                child: const Center(
+                  child: Icon(Icons.image, color: Colors.grey),
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            title,
-            style: const TextStyle(fontSize: 14),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            price,
-            style: const TextStyle(
-              fontSize: 13,
-              color: Colors.grey,
+            const SizedBox(height: 8),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 14),
             ),
-          ),
-        ],
+            const SizedBox(height: 4),
+            Text(
+              price,
+              style: const TextStyle(
+                fontSize: 13,
+                color: Colors.grey,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
