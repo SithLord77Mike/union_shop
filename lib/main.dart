@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/pages/about_page.dart';
+import 'package:union_shop/pages/collections_page.dart';
+import 'package:union_shop/pages/collection_page.dart';
+import 'package:union_shop/pages/sale_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -18,10 +21,12 @@ class UnionShopApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
       ),
       home: const HomeScreen(),
-      initialRoute: '/',
       routes: {
         '/product': (context) => const ProductPage(),
         '/about': (context) => const AboutPage(),
+        '/collections': (context) => const CollectionsPage(),
+        '/collection': (context) => const CollectionPage(),
+        '/sale': (context) => const SalePage(),
       },
     );
   }
@@ -36,6 +41,10 @@ class HomeScreen extends StatelessWidget {
 
   void navigateToProduct(BuildContext context) {
     Navigator.pushNamed(context, '/product');
+  }
+
+  void navigateToCollections(BuildContext context) {
+    Navigator.pushNamed(context, '/collections');
   }
 
   @override
@@ -216,7 +225,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 16),
 
             TextButton(
-              onPressed: () {},
+              onPressed: () => navigateToCollections(context),
               child: const Text('VIEW ALL PRODUCTS'),
             ),
 
